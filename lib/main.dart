@@ -1,11 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 void main() {
-  runApp(MyApp());
+  runApp(
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (_) => MyCountChangeNotifier()),
+      ],
+      child: MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -49,15 +56,18 @@ class Keyboard extends StatelessWidget {
   }
 }
 
-class MyHomePage extends StatefulWidget {
-  @override
-  State<StatefulWidget> createState() {
-    return _MyHomePage();
+class MyCountChangeNotifier with ChangeNotifier {
+  int _count = 0;
+
+  int get count => _count;
+
+  void increment() {
+    _count++;
+    notifyListeners();
   }
 }
 
-class _MyHomePage extends State<MyHomePage> {
-  int _count = 0;
+class MyHomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -66,16 +76,13 @@ class _MyHomePage extends State<MyHomePage> {
       ),
       body: Center(
         child: Text(
-          '$_count',
+          '${context.watch<MyCountChangeNotifier>()._count}',
           style: TextStyle(fontSize: 28),
         ),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          setState(() {
-            ++_count;
-          });
-          print('count: $_count');
+          context.read<MyCountChangeNotifier>().increment();
         },
         child: Icon(Icons.add),
       ),
