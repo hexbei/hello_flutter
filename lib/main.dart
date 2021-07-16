@@ -48,10 +48,10 @@ class Calculator extends StatelessWidget {
                             Expanded(
                               child: Column(
                                 children: [
-                                  keyboard("AC", 0),
-                                  keyboard("7", 1),
-                                  keyboard("4", 1),
-                                  keyboard("1", 1),
+                                  const Keyboard("AC", 0),
+                                  const Keyboard("7", 1),
+                                  const Keyboard("4", 1),
+                                  const Keyboard("1", 1),
                                   Expanded(
                                     child: Container(
                                         color: Colors.grey,
@@ -79,10 +79,10 @@ class Calculator extends StatelessWidget {
                             Expanded(
                               child: Column(
                                 children: [
-                                  keyboard("+/-", 0),
-                                  keyboard("8", 1),
-                                  keyboard('5', 1),
-                                  keyboard('2', 1),
+                                  const Keyboard("+/-", 0),
+                                  const Keyboard("8", 1),
+                                  const Keyboard('5', 1),
+                                  const Keyboard('2', 1),
                                   Expanded(
                                     child: Container(
                                       color: Colors.grey,
@@ -98,23 +98,23 @@ class Calculator extends StatelessWidget {
                             Expanded(
                               child: Column(
                                 children: [
-                                  keyboard('%', 0),
-                                  keyboard('9', 1),
-                                  keyboard('6', 1),
-                                  keyboard('3', 1),
-                                  keyboard('.', 1),
+                                  const Keyboard('%', 0),
+                                  const Keyboard('9', 1),
+                                  const Keyboard('6', 1),
+                                  const Keyboard('3', 1),
+                                  const Keyboard('.', 1),
                                 ],
                               ),
                               flex: 1,
                             ),
                             Expanded(
                               child: Column(
-                                children: [
-                                  keyboard('/', 3),
-                                  keyboard('X', 3),
-                                  keyboard('ㄧ', 3),
-                                  keyboard('+', 3),
-                                  keyboard('=', 3),
+                                children: <Widget>[
+                                  const Keyboard('/', 3),
+                                  const Keyboard('X', 3),
+                                  const Keyboard('ㄧ', 3),
+                                  const Keyboard('+', 3),
+                                  const Keyboard('=', 3),
                                 ],
                               ),
                               flex: 1,
@@ -126,26 +126,23 @@ class Calculator extends StatelessWidget {
   }
 }
 
-class keyboard extends StatelessWidget {
-  String Str = "";
-  int Type = 0;
-  keyboard(@required String str, int type) {
-    this.Str = str;
-    this.Type = type;
-  }
+class Keyboard extends StatelessWidget {
+  final String keyboardOfNum;
+  final int type;
+  const Keyboard(this.keyboardOfNum, this.type);
   @override
   Widget build(BuildContext context) {
     return Expanded(
       child: Container(
-          color: Type == 0
+          color: type == 0
               ? Colors.brown.shade800
-              : Type != 1
+              : type != 1
                   ? Colors.orange.shade300
                   : Colors.grey,
           margin: EdgeInsets.all(1),
           child: Center(
             child: Text(
-              Str,
+              keyboardOfNum,
               style: TextStyle(fontSize: 28, color: Colors.white),
             ),
           )),
